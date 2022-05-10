@@ -6,7 +6,7 @@ import AppError from "../errors/AppError.js";
 const app = express();
 app.use(json());
 app.use(cors());
-app.use(router);
+app.use("/api", router);
 
 app.use((error, req, res, next) => {
   if (error instanceof AppError) {

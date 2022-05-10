@@ -9,9 +9,17 @@ export default class DeleteUserService {
 
     const { db } = await connectMongoDB();
 
+    let userId;
+
+    try {
+      userId = new ObjectId(id);
+    } catch (error) {
+      throw new AppError("Invalid user ID", 422);
+    }
+
     const userExists = await db
       .collection(usersRepository.collection)
-      .findOne({ _id: new ObjectId(id) });
+      .findOne({ _id: userId });
 
     if (!userExists) {
       throw new AppError("User not found", 404);
